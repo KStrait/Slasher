@@ -1,5 +1,9 @@
 package com.kls.slasher.viewmodel
 
-class HomeViewModel() {
-    val temp = 0
+import com.kls.slasher.network.MovieRepository
+import org.koin.core.module.Module
+
+class HomeViewModel(private val movieRepository: MovieRepository) {
+
+    val movies = movieRepository.getMovies()
 }

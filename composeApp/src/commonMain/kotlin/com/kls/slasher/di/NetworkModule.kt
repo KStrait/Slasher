@@ -20,7 +20,7 @@ val providehttpClientModule = module {
                     }
 
                 }
-                level = LogLevel.INFO
+                level = LogLevel.ALL
             }
         }
     }

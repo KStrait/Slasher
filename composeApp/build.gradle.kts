@@ -1,6 +1,8 @@
 import org.jetbrains.compose.desktop.application.dsl.TargetFormat
 import org.jetbrains.kotlin.gradle.ExperimentalKotlinGradlePluginApi
 import org.jetbrains.kotlin.gradle.dsl.JvmTarget
+import com.codingfeline.buildkonfig.compiler.FieldSpec
+import java.util.*
 
 plugins {
     alias(libs.plugins.kotlinMultiplatform)
@@ -8,6 +10,7 @@ plugins {
     alias(libs.plugins.composeMultiplatform)
     alias(libs.plugins.composeCompiler)
     alias(libs.plugins.kotlinSerialization)
+    id("com.codingfeline.buildkonfig")
 }
 
 kotlin {
@@ -84,6 +87,20 @@ android {
     compileOptions {
         sourceCompatibility = JavaVersion.VERSION_11
         targetCompatibility = JavaVersion.VERSION_11
+    }
+}
+
+buildkonfig {
+    packageName = "com.kls.slasher"
+    val props = Properties()
+    try {
+        props.load(file("key.properties").inputStream())
+    } catch (e: Exception) {
+        // keys are private and can not be committed to git
+    }
+
+    defaultConfigs {
+        buildConfigField(FieldSpec.Type.STRING, "API_KEY", props["API_KEY"]?.toString() ?: "nothing")
     }
 }
 

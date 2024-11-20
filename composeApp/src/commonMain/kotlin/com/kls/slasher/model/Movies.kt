@@ -20,7 +20,7 @@ data class Movies(
     @SerialName("adult")
     var adult: Boolean = false,
     @SerialName("backdrop_path")
-    var backdrop_path: String = "",
+    var backdrop_path: String? = null,
     @SerialName("genre_ids")
     var genre_ids: List<Int> = emptyList(),
     @SerialName("id")

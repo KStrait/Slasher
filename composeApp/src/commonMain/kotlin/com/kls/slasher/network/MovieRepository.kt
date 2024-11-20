@@ -11,7 +11,7 @@ import kotlinx.coroutines.flow.Flow
 
 class MovieRepository(private val httpClient: HttpClient) {
     fun getMovies(): Flow<PagingData<Movies>> = Pager(
-        config = PagingConfig(pageSize = 10, initialLoadSize = 10, enablePlaceholders = false,),
+        config = PagingConfig(pageSize = 1, initialLoadSize = 1, enablePlaceholders = false,),
         pagingSourceFactory = {
             ResultPagingSource { page, _ ->
                 delay(800)

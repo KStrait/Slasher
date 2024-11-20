@@ -11,7 +11,7 @@ object ApiService {
 
     suspend fun HttpClient.getMovies(page: Int = 0) =
         getResults<ApiResponse> {
-            url("https://api.themoviedb.org/3/discover/movie?with_genres=27&page=${page * 10}")
+            url("https://api.themoviedb.org/3/discover/movie?with_genres=27&page=$page")
             header("Authorization", BuildKonfig.API_KEY)
             header("Accept", "application/json")
             method = HttpMethod.Get

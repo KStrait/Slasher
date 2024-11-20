@@ -54,10 +54,3 @@ fun HomeScreen() {
         PagingGrid(data = lazyPagingItems, content = { MovieCard(it) })
     }
 }
-
-
-
-
-
-
-

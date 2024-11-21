@@ -13,14 +13,58 @@ import androidx.compose.ui.text.PlatformTextStyle
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
+import androidx.navigation.NavHostController
+import androidx.navigation.NavType
+import androidx.navigation.compose.NavHost
+import androidx.navigation.compose.composable
+import androidx.navigation.compose.rememberNavController
+import androidx.navigation.navArgument
 import app.cash.paging.compose.collectAsLazyPagingItems
 import co.touchlab.kermit.Logger
+import com.kls.slasher.model.Movies
 import org.koin.compose.getKoin
 import com.kls.slasher.viewmodel.HomeViewModel
 import com.kls.slasher.ui.theme.SlasherFontFamily
+import org.jetbrains.compose.resources.StringResource
+import slasher.composeapp.generated.resources.Res
+import slasher.composeapp.generated.resources.home
+import slasher.composeapp.generated.resources.movie_details
+
+/**
+ * enum values that represent the screens in the app
+ */
+enum class AppScreen(val route: String) {
+    Home(route = "home"),
+    MovieDetails(
+        route = "movie_details/{movieId}"
+    )
+}
 
 @Composable
-fun HomeScreen() {
+fun HomeScreen(
+    navController: NavHostController = rememberNavController()
+) {
+    NavHost(
+        navController = navController,
+        startDestination = AppScreen.Home.name,
+    ) {
+        composable(route = AppScreen.Home.name) {
+            MoviesList(navController)
+        }
+        composable(
+            route = AppScreen.MovieDetails.route,
+            arguments = listOf(navArgument("movieId") { type = NavType.StringType })
+        ) { backStackEntry ->
+            val movieId = backStackEntry.arguments?.getString("movieId")
+            MovieDetails(movieId ?: "")
+        }
+    }
+}
+
+@Composable
+fun MoviesList(
+    navController: NavHostController
+) {
     val viewModel: HomeViewModel = getKoin().get()
     val lazyPagingItems by rememberUpdatedState(viewModel.movies.collectAsLazyPagingItems())
 
@@ -51,6 +95,6 @@ fun HomeScreen() {
         }
 
         // Content below the app bar
-        PagingGrid(data = lazyPagingItems, content = { MovieCard(it) })
+        PagingGrid(data = lazyPagingItems, content = { MovieCard(it, navController) })
     }
 }

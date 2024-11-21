@@ -56,6 +56,7 @@ kotlin {
             implementation(libs.media.kamel)
             implementation(libs.koin.compose)
             implementation(libs.kermit)
+            implementation(libs.navigation.compose)
         }
         iosMain.dependencies {
             implementation(libs.ktor.client.darwin)
@@ -105,6 +106,8 @@ buildkonfig {
 }
 
 dependencies {
+    implementation(libs.androidx.navigation.runtime.ktx)
+    implementation(libs.androidx.navigation.compose)
     debugImplementation(compose.uiTooling)
 }
 

@@ -1,5 +1,6 @@
 package com.kls.slasher.ui
 
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.Card
 import androidx.compose.material.MaterialTheme
@@ -15,15 +16,16 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
+import androidx.navigation.NavController
 import io.kamel.image.KamelImage
 import io.kamel.image.asyncPainterResource
 import com.kls.slasher.model.Movies
 
 
 @Composable
-fun MovieCard(movie: Movies) {
+fun MovieCard(movie: Movies, navController: NavController) {
 //    MovieItem(movie.title, movie.overview, movie.poster_path)
-    MovieItem2(movie.poster_path)
+    MovieItem2(movie.poster_path, navController)
 }
 
 
@@ -61,15 +63,18 @@ fun MovieItem(name: String, description: String, image: String) {
 }
 
 @Composable
-fun MovieItem2(image: String) {
+fun MovieItem2(image: String, navController: NavController) {
     Card(
         modifier = Modifier
             .padding(8.dp)
             .fillMaxWidth() // Full width of the parent
-            .aspectRatio(2f / 3f), // 2:3 width-to-height ratio
+            .aspectRatio(2f / 3f) // 2:3 width-to-height ratio
+            .clickable {
+                navController.navigate("movie_details/${image.drop(1)}")
+            },
         shape = MaterialTheme.shapes.medium,
         elevation = 5.dp,
-        backgroundColor = MaterialTheme.colors.surface
+        backgroundColor = Color.Black
     ) {
         Column(modifier = Modifier.fillMaxSize()) {
             Box(
@@ -83,7 +88,7 @@ fun MovieItem2(image: String) {
                     modifier = Modifier
                         .fillMaxWidth()
                         .clip(MaterialTheme.shapes.medium),
-                    contentScale = ContentScale.Fit // Ensures no cropping
+                    contentScale = ContentScale.Fit // Ensures no cropping,
                 )
             }
         }

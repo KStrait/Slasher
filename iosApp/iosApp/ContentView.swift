@@ -24,17 +24,7 @@ struct ComposeView: UIViewControllerRepresentable {
 
             UIApplication.shared.windows.filter {$0.isKeyWindow}.first?.addSubview(statusBar)
 
-    }
-
-//        // Directly use the statusBarFrame, no need for optional binding
-//        let statusBarFrame = UIApplication.shared.statusBarFrame
-//
-//        // Create and add the status bar view
-//        let statusBarView = UIView(frame: statusBarFrame)
-//        statusBarView.backgroundColor = color
-//
-//        // Ensure this is added to the keyWindow, or a valid window if working with iOS 13+
-//        UIApplication.shared.keyWindow?.addSubview(statusBarView)
+        }
     }
 }
 
@@ -45,6 +35,3 @@ struct ContentView: View {
             .ignoresSafeArea(.keyboard)
     }
 }
-
-
-

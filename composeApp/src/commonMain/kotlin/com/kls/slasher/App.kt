@@ -14,7 +14,9 @@ fun App() {
         modules(appModule())
     }) {
         MaterialTheme {
-            HomeScreen()
+            MaterialTheme {
+                HomeScreen()
+            }
         }
     }
 }

@@ -1,4 +1,3 @@
-import org.jetbrains.compose.desktop.application.dsl.TargetFormat
 import org.jetbrains.kotlin.gradle.ExperimentalKotlinGradlePluginApi
 import org.jetbrains.kotlin.gradle.dsl.JvmTarget
 import com.codingfeline.buildkonfig.compiler.FieldSpec
@@ -33,7 +32,6 @@ kotlin {
     }
     
     sourceSets {
-        
         androidMain.dependencies {
             implementation(compose.preview)
             implementation(libs.androidx.activity.compose)
@@ -42,6 +40,7 @@ kotlin {
         commonMain.dependencies {
             implementation(compose.runtime)
             implementation(compose.foundation)
+            implementation(compose.material3)
             implementation(compose.material)
             implementation(compose.ui)
             implementation(compose.components.resources)
@@ -110,4 +109,3 @@ dependencies {
     implementation(libs.androidx.navigation.compose)
     debugImplementation(compose.uiTooling)
 }
-

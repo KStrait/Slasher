@@ -9,8 +9,6 @@ import androidx.compose.runtime.rememberUpdatedState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.text.PlatformTextStyle
-import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
@@ -20,19 +18,10 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navArgument
 import app.cash.paging.compose.collectAsLazyPagingItems
-import co.touchlab.kermit.Logger
-import com.kls.slasher.model.Movies
 import org.koin.compose.getKoin
 import com.kls.slasher.viewmodel.HomeViewModel
 import com.kls.slasher.ui.theme.SlasherFontFamily
-import org.jetbrains.compose.resources.StringResource
-import slasher.composeapp.generated.resources.Res
-import slasher.composeapp.generated.resources.home
-import slasher.composeapp.generated.resources.movie_details
 
-/**
- * enum values that represent the screens in the app
- */
 enum class AppScreen(val route: String) {
     Home(route = "home"),
     MovieDetails(

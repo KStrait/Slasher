@@ -1,12 +1,11 @@
 package com.kls.slasher.ui
 
-import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.*
+import androidx.compose.material.Button
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import com.kls.slasher.getPlatform
 
 @Composable
 fun MovieDetails(movieId: String) {
@@ -14,7 +13,12 @@ fun MovieDetails(movieId: String) {
         modifier = Modifier.fillMaxSize(),
         verticalArrangement = Arrangement.Center
     ) {
-        Text(text = "Movie ID: $movieId")
+        if (getPlatform().ios) {
+            Button(onClick = {  }) {
+                Text("Back")
+            }
+        }
+        Text(modifier = Modifier.fillMaxSize(), text = "Movie ID: $movieId")
     }
 }
 

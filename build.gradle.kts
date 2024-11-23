@@ -7,4 +7,5 @@ plugins {
     alias(libs.plugins.composeCompiler) apply false
     alias(libs.plugins.kotlinMultiplatform) apply false
     id("com.codingfeline.buildkonfig") version "0.15.2" apply false // use apply false to avoid multiple applications
+//    alias(libs.plugins.kotlinCocoapods) apply false
 }

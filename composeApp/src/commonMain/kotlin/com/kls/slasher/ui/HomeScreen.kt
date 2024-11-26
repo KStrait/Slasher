@@ -2,6 +2,8 @@ package com.kls.slasher.ui
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.lazy.grid.LazyGridState
+import androidx.compose.foundation.lazy.grid.rememberLazyGridState
 import androidx.compose.material.*
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
@@ -17,10 +19,14 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navArgument
+import app.cash.paging.compose.LazyPagingItems
 import app.cash.paging.compose.collectAsLazyPagingItems
+import co.touchlab.kermit.Logger
+import com.kls.slasher.model.Movies
 import org.koin.compose.getKoin
 import com.kls.slasher.viewmodel.HomeViewModel
 import com.kls.slasher.ui.theme.SlasherFontFamily
+import com.kls.slasher.viewmodel.MovieDetailsViewModel
 
 enum class AppScreen(val route: String) {
     Home(route = "home"),
@@ -33,29 +39,36 @@ enum class AppScreen(val route: String) {
 fun HomeScreen(
     navController: NavHostController = rememberNavController()
 ) {
+    val lazyGridState = rememberLazyGridState()
+    val viewModel: HomeViewModel = getKoin().get()
+    val detailsViewModel: MovieDetailsViewModel = getKoin().get()
+    val lazyPagingItems by rememberUpdatedState(viewModel.movies.collectAsLazyPagingItems())
+
     NavHost(
         navController = navController,
         startDestination = AppScreen.Home.name,
     ) {
         composable(route = AppScreen.Home.name) {
-            MoviesList(navController)
+            MoviesList(navController, lazyGridState, lazyPagingItems)
         }
         composable(
             route = AppScreen.MovieDetails.route,
             arguments = listOf(navArgument("movieId") { type = NavType.StringType })
         ) { backStackEntry ->
             val movieId = backStackEntry.arguments?.getString("movieId")
-            MovieDetails(movieId ?: "")
+            MovieDetails(movieId ?: "", navController, detailsViewModel)
         }
     }
 }
 
 @Composable
 fun MoviesList(
-    navController: NavHostController
+    navController: NavHostController,
+    lazyGridState: LazyGridState,
+    lazyPagingItems: LazyPagingItems<Movies>
 ) {
-    val viewModel: HomeViewModel = getKoin().get()
-    val lazyPagingItems by rememberUpdatedState(viewModel.movies.collectAsLazyPagingItems())
+
+    Logger.d("MOVIES LIST")
 
     // Main content container (Column)
     Column(
@@ -84,6 +97,6 @@ fun MoviesList(
         }
 
         // Content below the app bar
-        PagingGrid(data = lazyPagingItems, content = { MovieCard(it, navController) })
+        PagingGrid(data = lazyPagingItems, content = { MovieCard(it, navController) }, lazyGridState)
     }
 }

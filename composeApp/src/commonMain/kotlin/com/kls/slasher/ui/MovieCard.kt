@@ -23,7 +23,7 @@ import com.kls.slasher.model.Movies
 @Composable
 fun MovieCard(movie: Movies, navController: NavController) {
 //    MovieItem(movie.title, movie.overview, movie.poster_path)
-    MovieItem2(movie.poster_path, navController)
+    MovieItem2(movie.poster_path, movie.id.toString(), navController)
 }
 
 
@@ -61,14 +61,14 @@ fun MovieItem(name: String, description: String, image: String) {
 }
 
 @Composable
-fun MovieItem2(image: String, navController: NavController) {
+fun MovieItem2(image: String, id: String, navController: NavController) {
     Card(
         modifier = Modifier
             .padding(8.dp)
             .fillMaxWidth() // Full width of the parent
             .aspectRatio(2f / 3f) // 2:3 width-to-height ratio
             .clickable {
-                navController.navigate("movie_details/${image.drop(1)}")
+                navController.navigate("movie_details/$id")
             },
         shape = MaterialTheme.shapes.medium,
         elevation = 5.dp,

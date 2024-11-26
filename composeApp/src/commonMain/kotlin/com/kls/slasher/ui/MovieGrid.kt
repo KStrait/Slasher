@@ -11,7 +11,9 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.wrapContentWidth
 import androidx.compose.foundation.lazy.grid.GridCells
+import androidx.compose.foundation.lazy.grid.LazyGridState
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
+import androidx.compose.foundation.lazy.grid.rememberLazyGridState
 import androidx.compose.material.CircularProgressIndicator
 import androidx.compose.material.OutlinedButton
 import androidx.compose.material.Text
@@ -30,13 +32,15 @@ import app.cash.paging.compose.LazyPagingItems
 @Composable
 fun <T : Any> PagingGrid(
     data: LazyPagingItems<T>,
-    content: @Composable (T) -> Unit
+    content: @Composable (T) -> Unit,
+    lazyGridState: LazyGridState
 ) {
     LazyVerticalGrid(
         columns = GridCells.Fixed(2),
         verticalArrangement = Arrangement.spacedBy(5.dp),
         horizontalArrangement = Arrangement.spacedBy(5.dp),
-        modifier = Modifier.fillMaxSize().background(Color.Black)
+        modifier = Modifier.fillMaxSize().background(Color.Black),
+        state = lazyGridState
     ){
         items(data.itemCount) { index ->
             val item = data[index]

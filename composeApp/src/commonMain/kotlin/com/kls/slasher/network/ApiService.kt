@@ -2,6 +2,7 @@ package com.kls.slasher.network
 
 import com.kls.slasher.BuildKonfig
 import com.kls.slasher.model.ApiResponse
+import com.kls.slasher.model.Details
 import io.ktor.client.HttpClient
 import io.ktor.client.plugins.*
 import io.ktor.client.request.*
@@ -16,4 +17,11 @@ object ApiService {
             header("Accept", "application/json")
             method = HttpMethod.Get
         }
+
+    suspend fun HttpClient.getMovieDetails(id: String) = getResults<Details> {
+        url("https://api.themoviedb.org/3/movie/$id")
+        header("Authorization", BuildKonfig.API_KEY)
+        header("Accept", "application/json")
+        method = HttpMethod.Get
+    }
 }
